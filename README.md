@@ -16,7 +16,7 @@ Un Userscript léger conçu pour bloquer les redirections agressives, les popups
 4. Allez dans l'onglet **Utilitaires** (Utilities).
 5. Dans la section **"Importer à partir d'une URL"**, collez le lien et cliquez sur **Installer**.
 
-![Aide](https://www.markdownlang.com/markdown-logo.png)
+![Aide](https://github.com/Xougui/Anti-Redirection-Anime-Sama/blob/master/img/aide.png)
 
 ## 📄 Licence
 
