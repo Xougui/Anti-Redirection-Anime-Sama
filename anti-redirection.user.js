@@ -23,7 +23,7 @@
     const TRUSTED_EXTERNAL = ['smoothpre.com', 't.me', 'discord.gg', 'discord.com', 'twitter.com', 'x.com'];
     const ANIME_SAMA_REGEX = /^([^\/]+\.)?animes?-sama\.[a-z0-9\-]+$/;
 
-    const LOG_PREFIX = '%c[Anti-Redirection]';
+    const LOG_PREFIX = '%c[Anti-Redirection Anime-Sama Extension]';
     const STYLE_ALLOWED = 'color: #2ecc71; font-weight: bold;';
     const STYLE_BLOCKED = 'color: #e74c3c; font-weight: bold;';
     const STYLE_INFO = 'color: #3498db; font-weight: bold;';
