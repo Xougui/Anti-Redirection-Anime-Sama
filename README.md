@@ -1,23 +1,48 @@
-# Anti-Redirection-Anime-Sama
+# 🛡️ Anti-Redirection Anime-Sama & SmoothPre
 
-Un Userscript léger conçu pour bloquer les redirections agressives, les popups publicitaires et les ouvertures d'onglets intempestives lors de l'utilisation du site Anime-Sama et de ses lecteurs vidéo (SmoothPre, etc.).
+Un Userscript léger et performant conçu pour bloquer les redirections agressives, les popups malveillantes et les ouvertures d'onglets intempestives sur le site **Anime-Sama** et ses lecteurs vidéo associés (comme **SmoothPre**).
+
+---
 
 ## ✨ Fonctionnalités
 
-- **Blocage intelligent :** Analyse les URL avant ouverture. Les fonctionnalités légitimes du site restent intactes, seules les requêtes vers des domaines publicitaires tiers sont bloquées.
-- **Surcharge de `window.open` via Proxy :** Empêche les scripts publicitaires cachés de contourner le bloqueur de popups natif du navigateur.
-- **Zero Dépendance :** Écrit en JavaScript vanilla, ultra-léger et rapide.
+* **⚡ Blocage intelligent & Sélectif :** Analyse les URL avant ouverture. Les fonctionnalités et liens légitimes du site restent totalement intacts, seules les requêtes vers des domaines publicitaires ou suspects sont interceptées.
+* **🎯 Surcharge de `window.open` par Proxy :** Utilise un proxy JavaScript pour intercepter et neutraliser les scripts publicitaires cachés qui tentent de contourner le bloqueur natif de votre navigateur.
+* **🪶 Ultra-léger :** Écrit en JavaScript natif (Vanilla JS), sans aucune dépendance externe, garantissant un impact nul sur les performances de votre navigateur.
+
+---
 
 ## 🛠️ Installation
 
-1. Installez une extension de gestion de scripts comme [Tampermonkey](https://www.tampermonkey.net/) (recommandé), Violentmonkey ou Greasemonkey.
-2. Copiez ce lien : `https://raw.githubusercontent.com/Xougui/Anti-Redirection-Anime-Sama/main/anti-redirection.user.js`
-3. Ouvrez le **Tableau de bord** de Tampermonkey.
-4. Allez dans l'onglet **Utilitaires** (Utilities).
-5. Dans la section **"Importer à partir d'une URL"**, collez le lien et cliquez sur **Installer**.
+### Étape 1 : Installer un gestionnaire de scripts
 
-![Aide](https://github.com/Xougui/Anti-Redirection-Anime-Sama/blob/master/img/aide.png)
+Si ce n'est pas déjà fait, installez une extension compatible avec votre navigateur :
+
+* [Tampermonkey](https://www.tampermonkey.net/) (Recommandé)
+* [Violentmonkey](https://violentmonkey.github.io/)
+
+### Étape 2 : Installer le script
+
+Choisissez l'une des deux méthodes ci-dessous :
+
+#### 🚀 Méthode 1 : Installation automatique (Recommandée)
+
+Cliquez simplement sur le lien ci-dessous. Votre extension devrait intercepter le script et vous proposer l'installation immédiate :
+👉 **[Installer Anti-Redirection Anime-Sama](https://github.com/Xougui/Anti-Redirection-Anime-Sama/raw/refs/heads/master/anti-redirection.user.js)**
+
+#### 🔧 Méthode 2 : Importation manuelle
+
+Si votre navigateur télécharge le fichier au lieu de l'installer automatiquement :
+
+1. Copiez ce lien : `https://github.com/Xougui/Anti-Redirection-Anime-Sama/raw/refs/heads/master/anti-redirection.user.js`
+2. Ouvrez le **Tableau de bord** de Tampermonkey.
+3. Allez dans l'onglet **Utilitaires** (Utilities).
+4. Dans la section **"Importer à partir d'une URL"**, collez le lien et cliquez sur **Installer**. (Voir ci-dessous)
+
+![Procédure d'aide à l'installation](https://github.com/Xougui/Anti-Redirection-Anime-Sama/blob/master/img/aide.png?raw=true)
+
+---
 
 ## 📄 Licence
 
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+Ce projet est distribué sous la licence **MIT**. Consultez le fichier [LICENSE](LICENSE) pour plus d'informations.

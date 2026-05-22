@@ -11,8 +11,8 @@
 // @run-at       document-start
 // @grant        none
 // @license      MIT
-// @downloadURL  https://raw.githubusercontent.com/Xougui/Anti-Redirection-Anime-Sama/main/anti-redirection.user.js
-// @updateURL    https://raw.githubusercontent.com/Xougui/Anti-Redirection-Anime-Sama/main/anti-redirection.user.js
+// @downloadURL  https://github.com/Xougui/Anti-Redirection-Anime-Sama/raw/refs/heads/master/anti-redirection.user.js
+// @updateURL    https://github.com/Xougui/Anti-Redirection-Anime-Sama/raw/refs/heads/master/anti-redirection.user.js
 // ==/UserScript==
 
 (function() {
