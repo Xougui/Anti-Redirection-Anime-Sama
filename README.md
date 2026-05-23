@@ -44,7 +44,7 @@ Si votre navigateur télécharge le fichier au lieu de l'installer automatiqueme
 #### 🐛 Cela ne marche pas?
 
 1. Vérifiez que l'extention est bien présente et activée.
-2. Rachargez la page.
+2. Rechargez la page.
 3. Videz votre cache.
 4. Reportez un bug ici : <https://github.com/Xougui/Anti-Redirection-Anime-Sama/issues/new>
 
