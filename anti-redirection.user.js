@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Anti-Redirection Anime-Sama
 // @namespace    https://github.com/Xougui/Anti-Redirection-Anime-Sama
-// @version      1.1.0
-// @description  Bloque les popups, les redirections agressives et les fenêtres publicitaires tierces sur Anime-Sama et ses lecteurs associés.
+// @version      1.2.0
+// @description  Bloque les popups, les redirections agressives et alerte en cas de site usurpateur d'Anime-Sama.
 // @author       Xougui
 // @include      *://*.anime-sama.*/*
 // @include      *://anime-sama.*/*
@@ -20,15 +20,87 @@
 (function () {
     'use strict';
 
-    const TRUSTED_EXTERNAL = ['smoothpre.com', 't.me', 'discord.gg', 'discord.com', 'twitter.com', 'x.com'];
-    const ANIME_SAMA_REGEX = /^([^\/]+\.)?animes?-sama\.[a-z0-9\-]+$/;
+    const TRUSTED_DOMAINS = [
+        'anime-sama.to',
+        'anime-sama.si',
+        'anime-sama.tv',
+        'anime-sama.org',
+        'smoothpre.com'
+    ];
+
+    const TRUSTED_EXTERNAL = ['t.me', 'discord.gg', 'discord.com', 'twitter.com', 'x.com'];
 
     const LOG_PREFIX = '%c[Anti-Redirection Anime-Sama Extension]';
     const STYLE_ALLOWED = 'color: #2ecc71; font-weight: bold;';
     const STYLE_BLOCKED = 'color: #e74c3c; font-weight: bold;';
     const STYLE_INFO = 'color: #3498db; font-weight: bold;';
 
-    console.log(`${LOG_PREFIX}%c Script initialisé et actif sur ${window.location.hostname}`, STYLE_INFO, 'color: inherit;');
+    const currentHostname = window.location.hostname;
+
+    const isOfficialSite = TRUSTED_DOMAINS.some(domain => currentHostname === domain || currentHostname.endsWith('.' + domain));
+
+    function showFraudAlert() {
+        const createAlert = () => {
+            if (document.getElementById('anime-sama-fraud-warning')) return;
+
+            const container = document.createElement('div');
+            container.id = 'anime-sama-fraud-warning';
+            container.innerHTML = `
+                <style>
+                    #anime-sama-fraud-warning {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        background-color: #ffebee;
+                        border-bottom: 4px solid #c62828;
+                        color: #c62828;
+                        font-family: Arial, sans-serif;
+                        padding: 15px;
+                        box-sizing: border-box;
+                        z-index: 9999999;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+                        text-align: center;
+                    }
+                    #anime-sama-fraud-warning h2 {
+                        margin: 0 0 8px 0;
+                        font-size: 1.3rem;
+                        color: #b71c1c;
+                    }
+                    #anime-sama-fraud-warning p {
+                        margin: 0;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        color: #333;
+                    }
+                    #anime-sama-fraud-warning a {
+                        color: #c62828;
+                        text-decoration: underline;
+                        font-weight: bold;
+                    }
+                </style>
+                <div>
+                    <h2>⚠️ Ce site est une copie frauduleuse qui usurpe l'identité d'Anime-Sama ⚠️</h2>
+                    <p>Pour votre sécurité, utilisez uniquement l'adresse officielle principale : <a href="https://anime-sama.to" target="_blank" rel="noopener noreferrer">anime-sama.to</a></p>
+                </div>
+            `;
+            document.body.appendChild(container);
+            document.body.style.marginTop = container.offsetHeight + 'px';
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', createAlert);
+        } else {
+            createAlert();
+        }
+    }
+
+    if (!isOfficialSite) {
+        console.warn(`${LOG_PREFIX} URL non reconnue ou domaine inactif détecté. Affichage de l'alerte.`, STYLE_BLOCKED);
+        showFraudAlert();
+    }
+
+    console.log(`${LOG_PREFIX}%c Script initialisé sur ${currentHostname}`, STYLE_INFO, 'color: inherit;');
 
     function isAllowed(url) {
         if (!url) return true;
@@ -39,10 +111,11 @@
 
         try {
             const hostname = new URL(url).hostname;
-            if (ANIME_SAMA_REGEX.test(hostname)) return true;
+
+            if (TRUSTED_DOMAINS.some(domain => hostname === domain || hostname.endsWith('.' + domain))) return true;
             return TRUSTED_EXTERNAL.some(domain => hostname === domain || hostname.endsWith('.' + domain));
         } catch (e) {
-            console.error(`${LOG_PREFIX} Erreur lors de l'analyse de l'URL : ${url}`, STYLE_BLOCKED, e);
+            console.error(`${LOG_PREFIX} Erreur d'analyse URL : ${url}`, STYLE_BLOCKED, e);
             return false;
         }
     }
@@ -50,30 +123,23 @@
     const originalWindowOpen = window.open;
     window.open = function (url, target, features) {
         if (isAllowed(url)) {
-            console.log(`${LOG_PREFIX} window.open() AUTORISÉ pour : ${url}`, STYLE_ALLOWED);
+            console.log(`${LOG_PREFIX} window.open() AUTORISÉ : ${url}`, STYLE_ALLOWED);
             return originalWindowOpen.apply(this, arguments);
         }
-
-        console.warn(`${LOG_PREFIX} window.open() BLOQUÉ pour : ${url}`, STYLE_BLOCKED);
-        return new Proxy({}, {
-            get: (_, prop) => {
-                if (prop === 'closed') return false;
-                return function () { };
-            }
-        });
+        console.warn(`${LOG_PREFIX} window.open() BLOQUÉ : ${url}`, STYLE_BLOCKED);
+        return new Proxy({}, { get: (_, prop) => prop === 'closed' ? false : function () {} });
     };
 
     document.addEventListener('click', function (e) {
         let target = e.target.closest('a');
         if (target && target.tagName === 'A') {
             const url = target.href;
-
             if (!isAllowed(url)) {
-                console.warn(`${LOG_PREFIX} Clic sur lien BLOQUÉ vers : ${url}`, STYLE_BLOCKED);
+                console.warn(`${LOG_PREFIX} Clic BLOQUÉ vers : ${url}`, STYLE_BLOCKED);
                 e.preventDefault();
                 e.stopPropagation();
             } else {
-                console.log(`${LOG_PREFIX} Clic sur lien AUTORISÉ vers : ${url}`, STYLE_ALLOWED);
+                console.log(`${LOG_PREFIX} Clic AUTORISÉ vers : ${url}`, STYLE_ALLOWED);
             }
         }
     }, true);
