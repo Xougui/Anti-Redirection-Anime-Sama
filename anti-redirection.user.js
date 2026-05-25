@@ -25,6 +25,7 @@
         'anime-sama.si',
         'anime-sama.tv',
         'anime-sama.org',
+        'anime-sama.pw',
         'smoothpre.com'
     ];
 
