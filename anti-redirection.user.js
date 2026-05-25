@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Anti-Redirection Anime-Sama
 // @namespace    https://github.com/Xougui/Anti-Redirection-Anime-Sama
-// @version      1.2.0
+// @version      1.2.1
 // @description  Bloque les popups, les redirections agressives et alerte en cas de site usurpateur d'Anime-Sama.
 // @author       Xougui
 // @include      *://*.anime-sama.*/*
@@ -25,6 +25,7 @@
         'anime-sama.si',
         'anime-sama.tv',
         'anime-sama.org',
+        'anime-sama.pw',
         'smoothpre.com'
     ];
 
